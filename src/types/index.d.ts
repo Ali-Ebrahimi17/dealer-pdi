@@ -12,6 +12,12 @@ interface ITop5Fault {
   _id: string
   count: Number
 }
+interface IDpuMonth {
+  month: string
+  machines: Number
+  claims: Number
+  dpu: Number
+}
 
 export interface IUser extends Document {
   email: string
@@ -44,7 +50,8 @@ export interface IInspection extends Document {
   started: Date
   top5Internalfaults: ITop5Fault[]
   top5DoaClaims: ITop5Fault[]
-  // common
+  dpuArr: IDpuMonth[]
+  // common[]
   _id: string
   createdAt: Date
   updatedAt: Date

@@ -31,6 +31,7 @@ interface Props {
     // modelFile?: string
     top5Internalfaults: Array<{ _id: string; count: number }>
     top5DoaClaims: Array<{ _id: string; count: number }>
+    dpuArr: Array<{ month: string; machines: number; claims: number; dpu: number }>
   }
   bayNumber?: string
 }
@@ -64,6 +65,15 @@ const ScreenDashboard = ({
       { _id: 'tbc', count: 0 },
       { _id: 'tbc', count: 0 },
       { _id: 'tbc', count: 0 },
+    ],
+    dpuArr: [
+      { month: 'tbc', machines: 0, claims: 0, dpu: 0 },
+      { month: 'tbc', machines: 0, claims: 0, dpu: 0 },
+      { month: 'tbc', machines: 0, claims: 0, dpu: 0 },
+      { month: 'tbc', machines: 0, claims: 0, dpu: 0 },
+      { month: 'tbc', machines: 0, claims: 0, dpu: 0 },
+      { month: 'tbc', machines: 0, claims: 0, dpu: 0 },
+      { month: 'tbc', machines: 0, claims: 0, dpu: 0 },
     ],
   },
   bayNumber = '0',
@@ -211,7 +221,7 @@ const ScreenDashboard = ({
               </div>
               {/* Line Chart - height adjusts based on screen size */}
               <div className='h-[270px]  w-full'>
-                <LineChart title={`${screenData.model} DOA DPU`} />
+                <LineChart title={`${screenData.model} DOA DPU`} dataArr={screenData.dpuArr} />
               </div>
               {/* Dealer Stats - takes remaining height, same as the 3D model */}
               <div className='flex-1 min-h-0 w-full'>

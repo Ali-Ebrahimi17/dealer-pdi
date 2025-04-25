@@ -50,6 +50,15 @@ const inspectionSchema = new Schema(
       },
       { default: [] },
     ],
+    dpuArr: [
+      {
+        month: { type: String },
+        machines: { type: Number },
+        claims: { type: Number },
+        dpu: { type: Number },
+      },
+      { default: [] },
+    ],
     // emailVerified: {
     //   type: Boolean,
     //   default: false,

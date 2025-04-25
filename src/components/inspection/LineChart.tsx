@@ -1,20 +1,41 @@
 'use client'
 
 import React from 'react'
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ChartOptions } from 'chart.js'
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  ChartOptions,
+  BarElement,
+  defaults,
+} from 'chart.js'
 import { Line, Bar } from 'react-chartjs-2'
 import GlowingContainer from './GlowingContainer'
+
+import ChartDataLabels from 'chartjs-plugin-datalabels'
 
 // import { useTheme } from "@/context/ThemeContext";
 
 // Register Chart.js components
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, BarElement)
+
+// defaults.color = 'white'
+// defaults.borderColor = '#808588'
+defaults.font.family = 'Lato'
+defaults.maintainAspectRatio = false
+defaults.responsive = true
 
 interface LineChartProps {
   title?: string
+  dataArr: Array<{ month: string; machines: number; claims: number; dpu: number }>
 }
 
-const LineChart: React.FC<LineChartProps> = ({ title = 'Dealer DPU' }) => {
+const LineChart = ({ title = 'Dealer DPU', dataArr }: LineChartProps) => {
   // const { theme } = useTheme();
   const isDarkMode = true
 
@@ -24,19 +45,41 @@ const LineChart: React.FC<LineChartProps> = ({ title = 'Dealer DPU' }) => {
 
   // JCB yellow color for chart
   const jcbYellow = '#f7c948'
-  const jcbYellowTransparent = 'rgba(247, 201, 72, 0.3)'
+  const jcbYellowTransparent = 'rgba(247, 201, 72, 0.5)'
+
+  const labels = dataArr.map((item) => item.month)
+  const dpuArr = dataArr.map((item) => item.dpu)
 
   const data = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+    labels: labels,
     datasets: [
       {
         label: 'DPU',
-        data: [12, 19, 16, 15, 14, 13],
+        data: dpuArr,
+        datalabels: {
+          display: true,
+          align: 'end',
+          anchor: 'end',
+          // offset: -1,
+          color: textColor,
+          font: {
+            // weight: 'bold',
+            size: '15px',
+          },
+          formatter: function (value: any) {
+            if (value > 0) {
+              return value
+            } else {
+              return ''
+            }
+          },
+        },
         borderColor: jcbYellow,
         backgroundColor: jcbYellowTransparent,
         tension: 0.4,
         fill: true,
-        borderWidth: 2,
+        borderWidth: 3,
+
         pointRadius: 4,
         pointBackgroundColor: jcbYellow,
         pointBorderColor: '#000',
@@ -46,17 +89,22 @@ const LineChart: React.FC<LineChartProps> = ({ title = 'Dealer DPU' }) => {
     ],
   }
 
-  const options: ChartOptions<'line'> = {
+  const options: ChartOptions<'bar'> = {
     responsive: true,
     maintainAspectRatio: false,
+    layout: {
+      padding: {
+        top: 50,
+      },
+    },
     plugins: {
       legend: {
-        display: true,
+        display: false,
         position: 'top' as const,
         labels: {
           color: textColor,
           font: {
-            weight: 'bold',
+            // weight: 'bold',
           },
         },
       },
@@ -71,7 +119,7 @@ const LineChart: React.FC<LineChartProps> = ({ title = 'Dealer DPU' }) => {
         padding: 10,
         displayColors: true,
         titleFont: {
-          weight: 'bold',
+          // weight: 'bold',
           size: 14,
         },
       },
@@ -79,33 +127,36 @@ const LineChart: React.FC<LineChartProps> = ({ title = 'Dealer DPU' }) => {
     scales: {
       y: {
         beginAtZero: true,
-        suggestedMax: 20,
+        // suggestedMax: 10,
         grid: {
+          display: false,
           color: gridColor,
         },
         ticks: {
+          display: false,
           color: textColor,
           font: {
-            weight: 'bold',
+            // weight: 'bold',
           },
         },
         title: {
-          display: true,
+          display: false,
           text: 'Defects Per Unit',
           color: textColor,
           font: {
-            weight: 'bold',
+            // weight: 'bold',
           },
         },
       },
       x: {
         grid: {
+          display: false,
           color: gridColor,
         },
         ticks: {
           color: textColor,
           font: {
-            weight: 'bold',
+            // weight: 'bold',
           },
         },
       },
@@ -115,7 +166,7 @@ const LineChart: React.FC<LineChartProps> = ({ title = 'Dealer DPU' }) => {
   return (
     <GlowingContainer title={title}>
       <div className='w-full h-full p-1'>
-        <Line data={data} options={options} />
+        <Bar data={data as any} options={options} plugins={[ChartDataLabels]} />
       </div>
     </GlowingContainer>
   )

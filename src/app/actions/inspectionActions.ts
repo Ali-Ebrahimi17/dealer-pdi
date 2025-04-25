@@ -52,6 +52,14 @@ export const startInspection = async (bay: string, serialNumber: string, dealerN
         { _id: 'tbc', count: 0 },
         { _id: 'tbc', count: 0 },
       ],
+      dpuArr: [
+        { month: 'tbc', machines: 0, claims: 0, dpu: 0 },
+        { month: 'tbc', machines: 0, claims: 0, dpu: 0 },
+        { month: 'tbc', machines: 0, claims: 0, dpu: 0 },
+        { month: 'tbc', machines: 0, claims: 0, dpu: 0 },
+        { month: 'tbc', machines: 0, claims: 0, dpu: 0 },
+        { month: 'tbc', machines: 0, claims: 0, dpu: 0 },
+      ],
       started: Date.now(),
     }
 
@@ -63,9 +71,10 @@ export const startInspection = async (bay: string, serialNumber: string, dealerN
 
     if (warrantyResponse.data) {
       obj.top5DoaClaims = warrantyResponse.data.data.top5DoaClaims
+      obj.dpuArr = warrantyResponse.data.data.dpuArr
     }
 
-    console.log('RESPONSE DATA => ', warrantyResponse.data.data.top5DoaClaims)
+    console.log('RESPONSE DATA => ', warrantyResponse.data.data)
 
     await Inspection.create(obj)
 

@@ -66,7 +66,7 @@ const DealerStats: React.FC<DealerStatsProps> = ({ top5Internalfaults, top5DoaCl
     <div className='flex flex-col xl:flex-row gap-3 xl:gap-4 h-full'>
       {/* Top 5 Defects */}
       <div className='flex-1 flex flex-col min-h-0'>
-        <GlowingContainer title={`${model} Top 5 Internal Defects`} className='flex-1 flex flex-col h-full overflow-hidden'>
+        <GlowingContainer title={`${model} Top 5 Int Defects`} className='flex-1 flex flex-col h-full overflow-hidden'>
           <div className='flex flex-col h-full w-full'>
             {/* Improved header */}
             <div className='sticky top-0 bg-gray-900 text-white text-sm font-semibold mx-1 py-2 px-3 flex items-center justify-between border-b border-gray-700 mb-1.5'>

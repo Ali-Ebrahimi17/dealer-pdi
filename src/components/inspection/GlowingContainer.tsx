@@ -20,9 +20,9 @@ const GlowingContainer: React.FC<GlowingContainerProps> = ({ children, title, cl
       <div className='absolute inset-0 z-0 border-2 border-jcb animate-pulse-glow'></div>
       <div className='relative z-10 h-full flex flex-col'>
         {title && (
-          <div className='bg-jcb py-3 px-2 shadow-md flex items-center justify-between'>
+          <div className='bg-jcb py-1.5 px-2 shadow-md flex items-center justify-between'>
             <div className='flex-1'>
-              <h3 className='text-center font-LatoBold text-[25px] text-base text-black tracking-wide'>{title}</h3>
+              <h3 className='text-center font-black text-[18px] text-base text-black tracking-wide'>{title}</h3>
             </div>
             {headerActions && <div className='flex items-center ml-2'>{headerActions}</div>}
           </div>
