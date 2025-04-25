@@ -6,7 +6,8 @@ export default function Home() {
     <section>
       <div>Home page</div>
       <div className='h-80h w-95w'>
-        <BarChart />
+        <div>All bay boxes here</div>
+        {/* <BarChart /> */}
         {/* <FileUploader /> */}
       </div>
     </section>

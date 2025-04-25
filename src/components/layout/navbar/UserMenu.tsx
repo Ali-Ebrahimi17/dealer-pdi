@@ -26,7 +26,7 @@ const UserMenu = ({ userInfo }: Props) => {
           </div>
         </DropdownTrigger>
         <DropdownMenu variant='flat' aria-label='User actions menu'>
-          {userInfo?.divisions.length > 0 ? (
+          {userInfo?.divisions?.length > 0 ? (
             <DropdownSection showDivider>
               {userInfo?.divisions
                 .filter((elem) => elem.roles.includes('dpu admin'))

@@ -30,10 +30,7 @@ const nextConfig = {
     BACKEND_SERVER_URL: 'http://172.30.60.22:3010',
     BASE_URL: 'http://172.30.60.22:3000',
     // email
-    SMTP_HOST: 'smtp.jcb.local',
-    SMTP_PORT: '25',
-    SMTP_FROM_EMAIL: 'JCB-Quality.Uptime@jcb.com',
-    SMTP_FROM_NAME: 'Uptime',
+   
   },
 }
 

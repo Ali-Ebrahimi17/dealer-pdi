@@ -1,42 +1,50 @@
-'use client'
-import React, { useEffect, useState } from 'react'
-
-import socket from '@/lib/socket'
-
 import MainHeader from '@/components/layout/MainHeader'
 
 import { Spinner } from '@nextui-org/react'
-const ScreenDashPage = ({ params }: { params: { bay: string } }) => {
+import ScreenDashboard from '@/components/inspection/ScreenDashboard'
+import { getLatestData } from '@/app/actions/inspectionActions'
+const ScreenDashPage = async ({ params }: { params: { bay: string } }) => {
   const bayNumber = params.bay
 
-  const [socketData, setsocketData] = useState('')
+  const inspection = await getLatestData(bayNumber)
 
-  useEffect(() => {
-    socket.on('start', (data) => {
-      console.log('Recieved from SERVER ::', data)
+  console.log('FROM DB => ', inspection)
 
-      if (data && data.bay === bayNumber) {
-        setsocketData(data)
-      }
-    })
-    socket.on('end', (data) => {
-      console.log('Recieved from SERVER ::', data)
-      if (data && data.bay === bayNumber) {
-        setsocketData(data)
-      }
-    })
-    return () => {
-      socket.off('start') // This represents the unmount function.
-      socket.off('end') // This represents the unmount function.
-    }
-  }, [socket, bayNumber])
+  const dashboardData = {
+    buildNumber: 'JAN551385',
+    serialNumber: '3468530',
+    model: 'P55-550-190',
+    dealer: 'OLIVER LANDPOWER UK',
+    dealerLogo: '/images/dealer-logos/oliver-landpower.png',
+    dealerName: 'Oliver Landpower Ltd',
+    countryFlag: '/country-flags/gb.svg',
+    countryName: 'United Kingdom',
+    currentDpuValue: 0,
+    intFaults: 0,
+    // targetDpuValue: 10,
+    // modelImage: '/images/jcb-model.png',
+    // modelFile: '/ldl.glb',
+    top5Internalfaults: [
+      { _id: 'tbc', count: 0 },
+      { _id: 'tbc', count: 0 },
+      { _id: 'tbc', count: 0 },
+      { _id: 'tbc', count: 0 },
+      { _id: 'tbc', count: 0 },
+    ],
+    top5DoaClaims: [
+      { _id: 'tbc', count: 0 },
+      { _id: 'tbc', count: 0 },
+      { _id: 'tbc', count: 0 },
+      { _id: 'tbc', count: 0 },
+      { _id: 'tbc', count: 0 },
+    ],
+  }
 
   return (
     <div>
-      <MainHeader mainText='Socket test page' subText='Info' />
-      <div>
-        <pre>{JSON.stringify(socketData, null, 2)}</pre>
-      </div>
+      {/* <MainHeader mainText={`Bay ${bayNumber}`} /> */}
+
+      <ScreenDashboard data={inspection} bayNumber={bayNumber} />
     </div>
   )
 }

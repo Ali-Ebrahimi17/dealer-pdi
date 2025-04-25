@@ -1,6 +1,6 @@
 type Props = {
   mainText: string
-  subText: string
+  subText?: string
 }
 const MainHeader = ({ mainText, subText }: Props) => {
   return (
