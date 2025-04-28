@@ -22,7 +22,7 @@ export const startInspection = async (bay: string, serialNumber: string, dealerN
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 
     // let response = await axios(`http://172.30.60.22:3069/dpu/api/get-machine-data?serialNumber=${serialNumber}`)
-    const response = await axios(`http://quality-uptime.jcb.local//dpu/api/get-machine-data?serialNumber=${serialNumber}`)
+    const response = await axios(`http://quality-uptime.jcb.local/dpu/api/get-machine-data?serialNumber=${serialNumber}`)
 
     console.log('RESPONSE DATA => ', response.data)
 
@@ -67,7 +67,8 @@ export const startInspection = async (bay: string, serialNumber: string, dealerN
       obj.countryName = foundCountry.name
     }
 
-    let warrantyResponse = await axios(`http://172.30.60.22:3030/warranty2/api/search/get-machine-dpu?model=${obj.model}`)
+    // let warrantyResponse = await axios(`http://172.30.60.22:3030/warranty2/api/search/get-machine-dpu?model=${obj.model}`)
+    let warrantyResponse = await axios(`http://quality-uptime.jcb.local/warranty2/api/search/get-machine-dpu?model=${obj.model}`)
 
     if (warrantyResponse.data) {
       obj.top5DoaClaims = warrantyResponse.data.data.top5DoaClaims

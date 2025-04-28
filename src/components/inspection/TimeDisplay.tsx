@@ -28,6 +28,8 @@ const TimeDisplay = ({ isRunning, start }: Props) => {
   // Set default to 60 minutes (3600 seconds) remaining
   const [timeLeft, setTimeLeft] = useState<number>(remaining)
 
+  console.log('TIMELEFT =>', timeLeft / 60)
+
   // Calculate progress and display time
   const progress = timeLeft / initialTime
   const minutes = Math.floor(timeLeft / 60)
@@ -35,13 +37,13 @@ const TimeDisplay = ({ isRunning, start }: Props) => {
   const displayTime = `${minutes}:${seconds.toString().padStart(2, '0')}`
 
   // Color function for progress bar - green when full time, red when time's almost up
-  const getProgressBarColor = () => {
-    if (progress > 0.66) {
-      return 'bg-green-500' // Lots of time left (>40 minutes) - green
-    } else if (progress > 0.33) {
-      return 'bg-yellow-500' // Medium time left (20-40 minutes) - yellow
+  const getTimerTextColor = () => {
+    if (timeLeft / 60 > 45) {
+      return 'text-closed'
+    } else if (progress > 15) {
+      return 'text-contained'
     } else {
-      return 'bg-red-500' // Low time left (<20 minutes) - red
+      return 'text-open'
     }
   }
 
@@ -107,7 +109,7 @@ const TimeDisplay = ({ isRunning, start }: Props) => {
 
         {/* Timer display - responsive text sizing */}
         <div className='-mt-1 flex items-center justify-center'>
-          <span className='font-digital text-9xl font-bold text-white responsive-text-2xl'>{displayTime}</span>
+          <span className={`font-digital text-9xl font-bold text-white responsive-text-2xl ${getTimerTextColor()}`}>{displayTime}</span>
         </div>
 
         {/* Progress bar - responsive heights */}
