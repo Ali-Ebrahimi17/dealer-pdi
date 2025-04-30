@@ -15,9 +15,9 @@ const ThreeDModel = ({modelFile}: Props) => {
   useEffect(() => {
     if (scene) {
       // Center the model in the container
-      scene.position.x = -0.5
-      scene.position.y = -1.2
-      scene.position.z = -0.2
+      scene.position.x = -0.2
+      scene.position.y = -1.8
+      scene.position.z = -1
     }
   }, [scene])
 
