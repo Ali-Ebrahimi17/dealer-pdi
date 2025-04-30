@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import React,  { useEffect, useState } from 'react'
 import Image from 'next/image'
 import socket from '@/lib/socket'
 import CountryFlag from './CountryFlag'
@@ -11,6 +11,12 @@ import EquipmentInfo from './EquipmentInfo'
 import LineChart from './LineChart'
 import TimeDisplay from './TimeDisplay'
 import { getLatestData } from '@/app/actions/inspectionActions'
+import ThreeDModel from './ThreeDModel'
+
+
+// import dynamic from 'next/dynamic';
+
+// const ModelCanvas = dynamic(() => import('../components/inspection/ThreeDModel'), { ssr: false });
 
 interface Props {
   data: {
@@ -201,8 +207,9 @@ const ScreenDashboard = ({
                 <CountryFlag flagSrc={screenData.countryFlag} countryName={screenData.countryName} title='Country' />
               </div>
               {/* 3D Model - takes remaining height */}
-              <div className='flex-1 min-h-0 w-full'>
-                {/* <ModelDisplay modelName={data.model || 'Equipment'} modelFile={data.modelFile} modelImage={data.modelImage} /> */}
+              <div className='flex-1 min-h-0 w-full '>
+                <ThreeDModel  modelFile='P33'  />
+              
               </div>
             </div>
 

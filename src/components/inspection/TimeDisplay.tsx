@@ -28,7 +28,7 @@ const TimeDisplay = ({ isRunning, start }: Props) => {
   // Set default to 60 minutes (3600 seconds) remaining
   const [timeLeft, setTimeLeft] = useState<number>(remaining)
 
-  console.log('TIMELEFT =>', timeLeft / 60)
+  // console.log('TIMELEFT =>', timeLeft / 60)
 
   // Calculate progress and display time
   const progress = timeLeft / initialTime
@@ -40,10 +40,13 @@ const TimeDisplay = ({ isRunning, start }: Props) => {
   const getTimerTextColor = () => {
     if (timeLeft / 60 > 45) {
       return 'text-closed'
-    } else if (progress > 15) {
+    } else if (timeLeft / 60 > 15) {
       return 'text-contained'
-    } else {
+    } else if (timeLeft /60 > 0) {
       return 'text-open'
+    
+    } else {
+      return 'text-white bg-open animate-pulse'
     }
   }
 
@@ -55,7 +58,8 @@ const TimeDisplay = ({ isRunning, start }: Props) => {
       interval = setInterval(() => {
         setTimeLeft((prevTime) => prevTime - 1)
       }, 1000)
-    } else if (timeLeft === 0) {
+    } else if (timeLeft <= 0) {
+      setTimeLeft(0)
     }
 
     return () => {
@@ -99,7 +103,7 @@ const TimeDisplay = ({ isRunning, start }: Props) => {
         </div>
       }
     >
-      <div className='p-2 h-full flex flex-col justify-center'>
+      <div className={`p-2 h-full flex flex-col justify-center ${getTimerTextColor()} w-full`}>
         {/* Time countdown indicator - responsive positioning */}
         {/* {isRunning && timeLeft < initialTime && (
           <div className='absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2'>
@@ -109,7 +113,7 @@ const TimeDisplay = ({ isRunning, start }: Props) => {
 
         {/* Timer display - responsive text sizing */}
         <div className='-mt-1 flex items-center justify-center'>
-          <span className={`font-digital text-9xl font-bold text-white responsive-text-2xl ${getTimerTextColor()}`}>{displayTime}</span>
+          <span className={`font-digital text-9xl font-bold  responsive-text-2xl `}>{displayTime}</span>
         </div>
 
         {/* Progress bar - responsive heights */}

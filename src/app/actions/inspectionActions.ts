@@ -13,10 +13,46 @@ import { stringifyForComponent } from './../../lib/helper_functions'
 
 export const startInspection = async (bay: string, serialNumber: string, dealerName: string) => {
   await connectDB()
+
+  let obj = {
+    bay,
+    serialNumber,
+    dealer: dealerName,
+    model: 'TBC',
+    buildNumber: 'TBC',
+    countryName:'TBC',
+    countryFlag: '/country-flags/gb.svg',
+    intFaults: 0,
+    top5Internalfaults: [
+      { _id: 'tbc', count: 0 },
+      { _id: 'tbc', count: 0 },
+      { _id: 'tbc', count: 0 },
+      { _id: 'tbc', count: 0 },
+      { _id: 'tbc', count: 0 },
+    ],
+    top5DoaClaims: [
+      { _id: 'tbc', count: 0 },
+      { _id: 'tbc', count: 0 },
+      { _id: 'tbc', count: 0 },
+      { _id: 'tbc', count: 0 },
+      { _id: 'tbc', count: 0 },
+    ],
+    dpuArr: [
+      { month: 'tbc', machines: 0, claims: 0, dpu: 0 },
+      { month: 'tbc', machines: 0, claims: 0, dpu: 0 },
+      { month: 'tbc', machines: 0, claims: 0, dpu: 0 },
+      { month: 'tbc', machines: 0, claims: 0, dpu: 0 },
+      { month: 'tbc', machines: 0, claims: 0, dpu: 0 },
+      { month: 'tbc', machines: 0, claims: 0, dpu: 0 },
+    ],
+    started: Date.now(),
+  }
+
+  
   try {
-    console.log('BAY => ', bay)
-    console.log('SERIAL => ', serialNumber)
-    console.log('DEALER => ', dealerName)
+    // console.log('BAY => ', bay)
+    // console.log('SERIAL => ', serialNumber)
+    // console.log('DEALER => ', dealerName)
     // ? web socket test start
 
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
@@ -24,7 +60,7 @@ export const startInspection = async (bay: string, serialNumber: string, dealerN
     // let response = await axios(`http://172.30.60.22:3069/dpu/api/get-machine-data?serialNumber=${serialNumber}`)
     const response = await axios(`http://quality-uptime.jcb.local/dpu/api/get-machine-data?serialNumber=${serialNumber}`)
 
-    console.log('RESPONSE DATA => ', response.data)
+    // console.log('RESPONSE DATA => ', response.data)
 
     await Inspection.updateMany(
       { open: true, bay },
@@ -35,37 +71,21 @@ export const startInspection = async (bay: string, serialNumber: string, dealerN
 
     let foundCountry = countryCodes.find((country: any) => country.abbreviation === response.data.countryName)
 
-    let obj = {
-      bay,
-      serialNumber,
-      dealer: dealerName,
-      model: response.data.model,
-      buildNumber: response.data.buildNumber,
-      countryName: response.data.countryName,
-      countryFlag: response.data?.countryFlag ? `/country-flags/${response.data?.countryFlag?.toLowerCase()}.svg` : `/country-flags/gb.svg`,
-      intFaults: response.data.intFaults,
-      top5Internalfaults: response.data.top5Internalfaults,
-      top5DoaClaims: [
-        { _id: 'tbc', count: 0 },
-        { _id: 'tbc', count: 0 },
-        { _id: 'tbc', count: 0 },
-        { _id: 'tbc', count: 0 },
-        { _id: 'tbc', count: 0 },
-      ],
-      dpuArr: [
-        { month: 'tbc', machines: 0, claims: 0, dpu: 0 },
-        { month: 'tbc', machines: 0, claims: 0, dpu: 0 },
-        { month: 'tbc', machines: 0, claims: 0, dpu: 0 },
-        { month: 'tbc', machines: 0, claims: 0, dpu: 0 },
-        { month: 'tbc', machines: 0, claims: 0, dpu: 0 },
-        { month: 'tbc', machines: 0, claims: 0, dpu: 0 },
-      ],
-      started: Date.now(),
+    if (response && response.data) {
+      Object.assign(obj, {
+        model: response.data.model,
+        buildNumber: response.data.buildNumber,
+        countryName: response.data.countryName,
+        countryFlag: response.data?.countryFlag ? `/country-flags/${response.data?.countryFlag?.toLowerCase()}.svg` : `/country-flags/gb.svg`,
+        intFaults: response.data.intFaults,
+        top5Internalfaults: response.data.top5Internalfaults,
+      })
+  
+      if (foundCountry) {
+        obj.countryName = foundCountry.name
+      }
     }
 
-    if (foundCountry) {
-      obj.countryName = foundCountry.name
-    }
 
     // let warrantyResponse = await axios(`http://172.30.60.22:3030/warranty2/api/search/get-machine-dpu?model=${obj.model}`)
     let warrantyResponse = await axios(`http://quality-uptime.jcb.local/warranty2/api/search/get-machine-dpu?model=${obj.model}`)
@@ -75,7 +95,7 @@ export const startInspection = async (bay: string, serialNumber: string, dealerN
       obj.dpuArr = warrantyResponse.data.data.dpuArr
     }
 
-    console.log('RESPONSE DATA => ', warrantyResponse.data.data)
+    // console.log('RESPONSE DATA => ', warrantyResponse.data.data)
 
     await Inspection.create(obj)
 
@@ -89,7 +109,7 @@ export const startInspection = async (bay: string, serialNumber: string, dealerN
   } catch (error) {
     console.log(error)
     throw error
-  }
+   }
 }
 export const endInspection = async (bay: string) => {
   await connectDB()
