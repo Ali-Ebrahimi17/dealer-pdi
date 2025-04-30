@@ -24,7 +24,7 @@ const ThreeDModel = ({ modelFile }: Props) => {
       <Canvas>
         <ambientLight intensity={1.5} />
         <directionalLight intensity={4} />
-        <PerspectiveCamera makeDefault position={[4, 2, 5]} fov={40} near={0.1} far={1500} />
+        <PerspectiveCamera makeDefault position={[5, 1, 7]} fov={40} near={0.1} far={1500} />
         <Suspense fallback={null}>
           <primitive object={scene} />
         </Suspense>
