@@ -95,7 +95,7 @@ const ScreenDashboard = ({
   const updateDash = async () => {
     try {
       const result = await getLatestData(bayNumber)
-      console.log('RESULT => ', result)
+      // console.log('RESULT => ', result)
       // setScreenData((prev) => ({
       //   ...prev,
       //   ...result,
@@ -139,15 +139,15 @@ const ScreenDashboard = ({
     }
   }, [socket, bayNumber])
 
-  useEffect(() => {
-    console.log('FORMATTED => ', screenData)
-    if (screenData.open === true) {
-      setInspectionActive(true)
-    }
-  }, [screenData])
+  // useEffect(() => {
+  //   console.log('FORMATTED => ', screenData)
+  //   if (screenData.open === true) {
+  //     setInspectionActive(true)
+  //   }
+  // }, [screenData])
 
   useEffect(() => {
-    console.log('FORMATTED => ', screenData)
+    // console.log('FORMATTED => ', screenData)
     if (data.open === true) {
       setInspectionActive(true)
       setScreenData(data)
