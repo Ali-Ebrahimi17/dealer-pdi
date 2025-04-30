@@ -42,9 +42,8 @@ const TimeDisplay = ({ isRunning, start }: Props) => {
       return 'text-closed'
     } else if (timeLeft / 60 > 15) {
       return 'text-contained'
-    } else if (timeLeft /60 > 0) {
+    } else if (timeLeft / 60 > 5) {
       return 'text-open'
-    
     } else {
       return 'text-white bg-open animate-pulse'
     }
