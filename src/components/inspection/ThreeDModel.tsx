@@ -2,11 +2,7 @@
 import React, { Suspense, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, useGLTF, PerspectiveCamera } from '@react-three/drei';
-import { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
-
 import GlowingContainer from './GlowingContainer'
-
-
 
 type Props = {
   modelFile: string
@@ -35,14 +31,8 @@ const ThreeDModel = ({modelFile}: Props) => {
       <PerspectiveCamera makeDefault position={[4, 2, 5]} fov={38} near={0.1} far={1500} />
       <Suspense fallback={null}>
       <primitive object={scene} />
-        {/* <Model /> */}
       </Suspense>
       <OrbitControls
-        // enableZoom={true}
-        // enablePan={false}
-        // enableRotate={true}
-        // minDistance={3}
-        // maxDistance={12}
         target={[0, -0.5, 0]}
         autoRotate={true}
         autoRotateSpeed={0.5}
