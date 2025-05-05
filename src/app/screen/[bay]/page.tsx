@@ -8,7 +8,7 @@ const ScreenDashPage = async ({ params }: { params: { bay: string } }) => {
 
   const inspection = await getLatestData(bayNumber)
 
-  console.log('FROM DB => ', inspection)
+  // console.log('FROM DB => ', inspection)
 
   const dashboardData = {
     buildNumber: 'JAN551385',

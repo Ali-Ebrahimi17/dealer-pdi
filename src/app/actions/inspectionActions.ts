@@ -20,7 +20,7 @@ export const startInspection = async (bay: string, serialNumber: string, dealerN
     dealer: dealerName,
     model: 'TBC',
     buildNumber: 'TBC',
-    countryName:'TBC',
+    countryName: 'TBC',
     countryFlag: '/country-flags/gb.svg',
     intFaults: 0,
     top5Internalfaults: [
@@ -48,7 +48,6 @@ export const startInspection = async (bay: string, serialNumber: string, dealerN
     started: Date.now(),
   }
 
-  
   try {
     // console.log('BAY => ', bay)
     // console.log('SERIAL => ', serialNumber)
@@ -69,9 +68,8 @@ export const startInspection = async (bay: string, serialNumber: string, dealerN
       }
     )
 
-    let foundCountry = countryCodes.find((country: any) => country.abbreviation === response.data.countryName)
-
     if (response && response.data) {
+      let foundCountry = countryCodes.find((country: any) => country.abbreviation === response.data.countryName)
       Object.assign(obj, {
         model: response.data.model,
         buildNumber: response.data.buildNumber,
@@ -80,12 +78,11 @@ export const startInspection = async (bay: string, serialNumber: string, dealerN
         intFaults: response.data.intFaults,
         top5Internalfaults: response.data.top5Internalfaults,
       })
-  
+
       if (foundCountry) {
         obj.countryName = foundCountry.name
       }
     }
-
 
     // let warrantyResponse = await axios(`http://172.30.60.22:3030/warranty2/api/search/get-machine-dpu?model=${obj.model}`)
     let warrantyResponse = await axios(`http://quality-uptime.jcb.local/warranty2/api/search/get-machine-dpu?model=${obj.model}`)
@@ -102,14 +99,14 @@ export const startInspection = async (bay: string, serialNumber: string, dealerN
     let data = {
       bay: bay,
     }
-    console.log('started')
+    // console.log('started')
     socket.emit('start', data)
 
     return { success: true }
   } catch (error) {
     console.log(error)
     throw error
-   }
+  }
 }
 export const endInspection = async (bay: string) => {
   await connectDB()
@@ -122,7 +119,7 @@ export const endInspection = async (bay: string) => {
     )
 
     // ? web socket test start
-    console.log('end')
+    // console.log('end')
     socket.emit('end', { bay })
 
     // setTimeout(function () {
