@@ -75,7 +75,7 @@ const ThreeDModel = ({ modelFile }: Props) => {
     if (scene) {
       // Center the model in the container
       scene.position.x = -0.2
-      scene.position.y = -1.9
+      scene.position.y = -2.1
       scene.position.z = -1
     }
   }, [scene])
@@ -88,7 +88,7 @@ const ThreeDModel = ({ modelFile }: Props) => {
         <PerspectiveCamera makeDefault position={[5, 1, 7]} fov={40} near={0.1} far={1500} />
         <Suspense fallback={null}>
           <SparkleEffect />
-          <GridFloor />
+          {/* <GridFloor /> */}
           {/* <primitive object={scene} /> */}
           <Model url={modelFile} />
         </Suspense>
