@@ -18,6 +18,7 @@ export const startInspection = async (bay: string, serialNumber: string, dealerN
     bay,
     serialNumber,
     dealer: dealerName,
+    inspectionMins: 60,
     model: 'TBC',
     buildNumber: 'TBC',
     countryName: 'TBC',
@@ -69,6 +70,7 @@ export const startInspection = async (bay: string, serialNumber: string, dealerN
     )
 
     if (response && response.data) {
+      let mins = response.data.model.includes('AG') || response.data.model.includes('PRO') ? 60 : 30
       let foundCountry = countryCodes.find((country: any) => country.abbreviation === response.data.countryName)
       Object.assign(obj, {
         model: response.data.model,
@@ -77,6 +79,7 @@ export const startInspection = async (bay: string, serialNumber: string, dealerN
         countryFlag: response.data?.countryFlag ? `/country-flags/${response.data?.countryFlag?.toLowerCase()}.svg` : `/country-flags/gb.svg`,
         intFaults: response.data.intFaults,
         top5Internalfaults: response.data.top5Internalfaults,
+        inspectionMins: mins,
       })
 
       if (foundCountry) {

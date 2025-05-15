@@ -29,6 +29,9 @@ const inspectionSchema = new Schema(
     intFaults: {
       type: Number,
     },
+    inspectionMins: {
+      type: Number,
+    },
     started: {
       type: Date,
     },

@@ -1,6 +1,6 @@
 'use client'
 
-import React,  { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import socket from '@/lib/socket'
 import CountryFlag from './CountryFlag'
@@ -12,7 +12,6 @@ import LineChart from './LineChart'
 import TimeDisplay from './TimeDisplay'
 import { getLatestData } from '@/app/actions/inspectionActions'
 import ThreeDModel from './ThreeDModel'
-
 
 // import dynamic from 'next/dynamic';
 
@@ -30,6 +29,7 @@ interface Props {
     countryName?: string
     currentDpuValue: number
     intFaults: number
+    inspectionMins: number
     open: boolean
     started: Date
 
@@ -53,6 +53,7 @@ const ScreenDashboard = ({
     countryFlag: '/country-flags/gb.svg',
     countryName: 'TBC',
     currentDpuValue: 0,
+    inspectionMins: 60,
     intFaults: 0,
     open: false,
     started: new Date(),
@@ -208,8 +209,7 @@ const ScreenDashboard = ({
               </div>
               {/* 3D Model - takes remaining height */}
               <div className='flex-1 min-h-0 w-full '>
-                <ThreeDModel  modelFile='P69'  />
-              
+                <ThreeDModel modelFile='P69' />
               </div>
             </div>
 
@@ -224,7 +224,7 @@ const ScreenDashboard = ({
                   trend='decreasing'
                   status={screenData.intFaults <= 10 ? 'normal' : screenData.intFaults <= 35 ? 'warning' : 'critical'}
                 />
-                <TimeDisplay isRunning={isRunning} start={screenData.started} />
+                <TimeDisplay isRunning={isRunning} start={screenData.started} inspectionMins={screenData.inspectionMins} />
               </div>
               {/* Line Chart - height adjusts based on screen size */}
               <div className='h-[270px]  w-full'>

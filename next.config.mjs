@@ -27,10 +27,9 @@ const nextConfig = {
     // images
     IMAGE_ENDPOINT: 'http://localhost:3000/api/upload',
     // url
-    BACKEND_SERVER_URL: 'http://172.30.60.22:3010',
-    BASE_URL: 'http://172.30.60.22:3000',
+    BACKEND_SERVER_URL: 'http://172.23.0.108/:3010',
+    BASE_URL: 'http://172.23.0.108/:3000',
     // email
-   
   },
 }
 

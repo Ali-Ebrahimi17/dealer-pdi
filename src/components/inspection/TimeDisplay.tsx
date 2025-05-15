@@ -9,13 +9,16 @@ import GlowingContainer from './GlowingContainer'
 type Props = {
   isRunning: boolean
   start: Date
+  inspectionMins: number
 }
 
-const TimeDisplay = ({ isRunning, start }: Props) => {
+const TimeDisplay = ({ isRunning, start, inspectionMins = 60 }: Props) => {
   const now = Number(new Date()) / 1000
   const endTimeMs = Number(new Date(start)) / 1000
 
-  const remaining = Math.round(endTimeMs - now + 3600)
+  const inspectionSeconds = inspectionMins * 60
+
+  const remaining = Math.round(endTimeMs - now + inspectionSeconds)
 
   // console.log('START => ', startTimeMs)
   // console.log('END => ', endTimeMs)

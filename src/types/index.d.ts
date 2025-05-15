@@ -46,6 +46,7 @@ export interface IInspection extends Document {
   buildNumber: string
   countryName: string
   countryFlag: string
+  inspectionMins: Number
   intFaults: Number
   started: Date
   top5Internalfaults: ITop5Fault[]
